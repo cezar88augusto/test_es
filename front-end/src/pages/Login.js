@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../actions/index';
 import { isValidEmail, isValidPassword } from '../functions';
+import LoginForm from '../components/LoginForm'
 
 class Login extends React.Component {
   constructor(props) {
@@ -13,7 +14,6 @@ class Login extends React.Component {
       password: '',
       validateEmail: false,
     };
-  
   }
 
   handleChange(event) {
@@ -32,31 +32,7 @@ class Login extends React.Component {
     if (logged) return (<Redirect to="/cadastro" />);
     return (
       <div>
-        <div>
-          <label htmlFor="email-input">
-            E-mail:
-            <input
-              data-testid="email-input"
-              name="email"
-              type="email"
-              required="required"
-              pattern="/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/"
-              onChange={this.handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="password-input">
-            Password:
-            <input
-              data-testid="password-input"
-              name="password"
-              type="password"
-              required="required"
-              onChange={this.handleChange}
-            />
-          </label>
-        </div>
+        <LoginForm handleChange={this.handleChange}/>
         <button
           type="button"
           disabled={!validateEmail}
