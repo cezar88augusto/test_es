@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteUserAction, addUserAction, editingUserAction, editedUserAction } from '../actions/index'
-import data from '../../src/back-end/db.json'
+import data from '../../src/data/db.json'
 
 class Table extends React.Component {
   constructor(props) {
@@ -59,9 +59,10 @@ class Table extends React.Component {
       confirmUpdateUser(arrayOfUsers[editingId])
   }
 
-
   render() {
-    const { arrayOfUsers, deleteUser, updateUser, isEditing } = this.props
+
+    const { arrayOfUsers, deleteUser, updateUser, isEditing, editingId } = this.props
+
     const editingButton = (
       <button
         onClick={() => this.editUserState()}
@@ -89,6 +90,7 @@ class Table extends React.Component {
             <input
               type="text"
               name="nome"
+              value={isEditing ? arrayOfUsers[editingId].nome : ''}
               onChange={ this.handleChange }
             />
         </label>
@@ -98,6 +100,7 @@ class Table extends React.Component {
             <input
               type="text"
               name="sobrenome"
+              value={isEditing ? arrayOfUsers[editingId].sobrenome : ''}
               onChange={ this.handleChange }
             />
         </label>
@@ -107,6 +110,7 @@ class Table extends React.Component {
             <input
               type="email"
               name="email"
+              value={isEditing ? arrayOfUsers[editingId].email : ''}
               onChange={ this.handleChange }
             />
         </label>
@@ -116,6 +120,7 @@ class Table extends React.Component {
             <input
               type="password"
               name="senha"
+              value={isEditing ? arrayOfUsers[editingId].senha : ''}
               onChange={ this.handleChange }
             />
         </label>
@@ -124,6 +129,7 @@ class Table extends React.Component {
             Tipo Usuário:
             <select
               name="tipoUsuario"
+              value={isEditing ? arrayOfUsers[editingId].tipoUsuario : ''}
               onChange={ this.handleChange }
             >
               <option value=""></option>
@@ -136,6 +142,7 @@ class Table extends React.Component {
             Usuário Ativo:
             <select
               name="ativo"
+              value={isEditing ? arrayOfUsers[editingId].ativo : ''}
               onChange={ this.handleChange }
             >
               <option value=''></option>

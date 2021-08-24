@@ -1,9 +1,9 @@
-import data from '../back-end/db.json'
+import data from '../../src/data/db.json'
 
 const INITIAL_STATE = {
   allUsers: data,
   isEditing: false,
-  editingId: 0,
+  editingId: '',
 };
 
 function usersReducer(state = INITIAL_STATE, action) {

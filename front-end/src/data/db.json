@@ -6,7 +6,7 @@
     "tipoUsuario": "Administrador",
     "email": "usuario1@email.com.br",
     "senha": "123445",
-    "ativo": true
+    "ativo": "Sim"
   },
   {
     "id": 1,
@@ -15,7 +15,7 @@
     "tipoUsuario": "Administrador",
     "email": "usuario2@email.com.br",
     "senha": "123445",
-    "ativo": true
+    "ativo": "Sim"
   },
   {
     "id": 2,
@@ -24,7 +24,7 @@
     "tipoUsuario": "Usuário padrão",
     "email": "usuario3@email.com.br",
     "senha": "123445",
-    "ativo": true
+    "ativo": "Sim"
   },
   {
     "id": 3,
@@ -33,7 +33,7 @@
     "tipoUsuario": "Usuário padrão",
     "email": "usuario4@email.com.br",
     "senha": "123445",
-    "ativo": false
+    "ativo": "Não"
   },
   {
     "id": 4,
@@ -42,7 +42,7 @@
     "tipoUsuario": "Usuário padrão",
     "email": "usuario5@email.com.br",
     "senha": "123445",
-    "ativo": true
+    "ativo": "Sim"
   },
   {
     "id": 5,
@@ -51,7 +51,7 @@
     "tipoUsuario": "Administrador",
     "email": "usuario6@email.com.br",
     "senha": "123445",
-    "ativo": true
+    "ativo": "Sim"
   },
   {
     "id": 6,
@@ -60,7 +60,7 @@
     "tipoUsuario": "Usuário padrão",
     "email": "usuario7@email.com.br",
     "senha": "123445",
-    "ativo": false
+    "ativo": "Não"
   },
   {
     "id": 7,
@@ -69,6 +69,6 @@
     "tipoUsuario": "Administrador",
     "email": "usuario8@email.com.br",
     "senha": "123445",
-    "ativo": false
+    "ativo": "Não"
   }
 ]
