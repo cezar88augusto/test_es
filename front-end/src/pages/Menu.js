@@ -12,7 +12,6 @@ class Users extends React.Component {
   }
 
   render() {
-
     return (
       <div>
         <ul>
@@ -23,17 +22,7 @@ class Users extends React.Component {
           </li>
           <li>
             <Link to="/create-user">
-              Criar Usuário
-            </Link>
-          </li>
-          <li>
-            <Link to="/update-user">
-              Atualizar Usuário
-            </Link>
-          </li>
-          <li>
-            <Link to="/delete-user">
-              Deletar Usuário
+              Buscar Usuário
             </Link>
           </li>
         </ul>

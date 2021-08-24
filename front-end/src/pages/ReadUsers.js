@@ -24,7 +24,7 @@ class ReadUsers extends React.Component {
         <Link to="/management">
           Voltar
         </Link>
-        <h1>List Users</h1>
+        <h1>Users</h1>
         <table>
           <thead>
             <tr>
