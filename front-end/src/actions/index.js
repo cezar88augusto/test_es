@@ -17,3 +17,15 @@ export const deleteUserAction = (id) => ({
   type: 'DELETE_USER',
   id
 })
+
+export const editingUserAction = (editingId, bool) => ({
+  type: 'EDITING_USER',
+  editingId,
+  bool,
+});
+
+export const editedUserAction = (user, bool) => ({
+  type: 'EDITED_USER',
+  user,
+  bool,
+});

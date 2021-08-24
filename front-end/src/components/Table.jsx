@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteUserAction, addUserAction } from '../actions/index'
+import { deleteUserAction, addUserAction, editingUserAction, editedUserAction } from '../actions/index'
 import data from '../../src/back-end/db.json'
 
 class Table extends React.Component {
@@ -11,10 +11,10 @@ class Table extends React.Component {
       id: data.length+1,
       nome: '',
       sobrenome: '',
-      tipoUsuario: 'Usuário padrão',
+      tipoUsuario: '',
       email: '',
       senha: '',
-      ativo: true
+      ativo: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,18 +22,9 @@ class Table extends React.Component {
 
   }
 
-  componentDidMount() {
-    const { arrayOfUsers } = this.props
-    console.log(arrayOfUsers)
-  }
-
-  componentDidUpdate(){
-    const { arrayOfUsers } = this.props
-    console.log(arrayOfUsers)
-  }
-
   handleChange(event) {
     const { name, value } = event.target;
+    console.log(value)
     this.setState({ [name]: value });
   }
 
@@ -48,8 +39,45 @@ class Table extends React.Component {
    addUser(this.state)
   }
 
+  editUserState() {
+    const { editingId, arrayOfUsers, confirmUpdateUser } = this.props
+    const { 
+      nome,
+      sobrenome,
+      tipoUsuario,
+      email,
+      senha,
+      ativo,
+      } = this.state
+      arrayOfUsers[editingId].nome = nome;
+      arrayOfUsers[editingId].sobrenome = sobrenome;
+      arrayOfUsers[editingId].tipoUsuario = tipoUsuario;
+      arrayOfUsers[editingId].email = email;
+      arrayOfUsers[editingId].senha = senha;
+      arrayOfUsers[editingId].ativo = ativo;
+
+      confirmUpdateUser(arrayOfUsers[editingId])
+  }
+
+
   render() {
-    const { arrayOfUsers, deleteUser } = this.props
+    const { arrayOfUsers, deleteUser, updateUser, isEditing } = this.props
+    const editingButton = (
+      <button
+        onClick={() => this.editUserState()}
+      >
+        Editar usuáro
+      </button>
+    );
+
+    const addingButton = (
+      <button
+        onClick={() => this.addUserState()}
+      >
+        Adicionar usuáro
+      </button>
+    );
+
     return (
       <div>
         <Link to="/management">
@@ -110,16 +138,13 @@ class Table extends React.Component {
               name="ativo"
               onChange={ this.handleChange }
             >
-              <option value={true}>Sim</option>
-              <option value={false}>Não</option>
+              <option value=''></option>
+              <option value='Sim'>Sim</option>
+              <option value='Não'>Não</option>
             </select>
           </label>
         </form>
-        <button
-          onClick={() => this.addUserState()}
-        >
-          Cadastrar Usuário
-        </button>
+        { isEditing ? editingButton : addingButton}
         <h1>List Users</h1>
         <table>
           <thead>
@@ -143,11 +168,12 @@ class Table extends React.Component {
                 <tr key={id}>
                   <td>{nome + " " + sobrenome}</td>
                   <td>{tipoUsuario}</td>
-                  <td>{ativo ? "Sim" : "Não"}</td>
+                  <td>{ativo === 'Sim' ? "Sim" : "Não"}</td>
                   <td>
                     <button
                       data-testid="edit-btn"
                       type="button"
+                      onClick={() => updateUser(id,true)}
                     >
                       O
                     </button>
@@ -172,12 +198,16 @@ class Table extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  arrayOfUsers: state.users.allUsers
+  arrayOfUsers: state.users.allUsers,
+  isEditing: state.users.isEditing,
+  editingId: state.users.editingId
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addUser: (user) => dispatch(addUserAction(user)),
   deleteUser: (id) => dispatch(deleteUserAction(id)),
+  updateUser: (id) => dispatch(editingUserAction(id, true)),
+  confirmUpdateUser: (user) => dispatch(editedUserAction(user,false))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
