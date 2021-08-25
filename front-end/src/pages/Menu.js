@@ -8,12 +8,12 @@ class Menu extends React.Component {
       <div>
         <ul>
           <li>
-            <Link to="/users">
+            <Link to="/users-management">
               Gerenciar Usuários
             </Link>
           </li>
           <li>
-            <Link to="/create-user">
+            <Link to="/search-users">
               Buscar Usuário
             </Link>
           </li>

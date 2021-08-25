@@ -18,6 +18,7 @@ class Table extends React.Component {
       ativo: '',
       editingUser: ''
     };
+    
     this.handleChange = this.handleChange.bind(this);
     this.addUserState = this.addUserState.bind(this);
     this.clearInputs = this.clearInputs.bind(this);
