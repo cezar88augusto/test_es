@@ -1,15 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-class Users extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-
-  }
+class Menu extends React.Component {
 
   render() {
     return (
@@ -17,7 +9,7 @@ class Users extends React.Component {
         <ul>
           <li>
             <Link to="/users">
-              Listar Usuários
+              Gerenciar Usuários
             </Link>
           </li>
           <li>
@@ -31,12 +23,4 @@ class Users extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-
-});
-
-const mapDispatchToProps = (dispatch) => ({
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default Menu;

@@ -29,7 +29,7 @@ class Login extends React.Component {
   render() {
     const { validateEmail, email } = this.state;
     const { loggin, logged } = this.props;
-    if (logged) return (<Redirect to="/management" />);
+    if (logged) return (<Redirect to="/menu" />);
     return (
       <div>
         <LoginForm handleChange={this.handleChange}/>

@@ -2,66 +2,67 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteUserAction, addUserAction, editingUserAction, editedUserAction } from '../actions/index'
-import data from '../../src/data/db.json'
 
 class Table extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: data.length+1,
+      id: 8,
       nome: '',
       sobrenome: '',
       tipoUsuario: '',
       email: '',
       senha: '',
-      ativo: ''
+      ativo: '',
+      editingUser: ''
     };
-
     this.handleChange = this.handleChange.bind(this);
     this.addUserState = this.addUserState.bind(this);
-
+    this.clearInputs = this.clearInputs.bind(this);
   }
 
   handleChange(event) {
     const { name, value } = event.target;
-    console.log(value)
     this.setState({ [name]: value });
   }
 
   addUserState() {
     const { addUser } = this.props;
-    this.setState(prevState =>{
-      return{
-           ...prevState,
-           id : prevState.id +1
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        id: prevState.id + 1
       }
-   })
-   addUser(this.state)
+    })
+    addUser(this.state)
+    this.clearInputs()
   }
 
   editUserState() {
     const { editingId, arrayOfUsers, confirmUpdateUser } = this.props
-    const { 
-      nome,
-      sobrenome,
-      tipoUsuario,
-      email,
-      senha,
-      ativo,
-      } = this.state
-      arrayOfUsers[editingId].nome = nome;
-      arrayOfUsers[editingId].sobrenome = sobrenome;
-      arrayOfUsers[editingId].tipoUsuario = tipoUsuario;
-      arrayOfUsers[editingId].email = email;
-      arrayOfUsers[editingId].senha = senha;
-      arrayOfUsers[editingId].ativo = ativo;
+    const { nome, sobrenome, tipoUsuario, email, senha, ativo } = this.state
+    const editedUser = arrayOfUsers.filter((user) => user.id === editingId)[0];
+    editedUser.nome = nome;
+    editedUser.sobrenome = sobrenome;
+    editedUser.tipoUsuario = tipoUsuario;
+    editedUser.email = email;
+    editedUser.senha = senha;
+    editedUser.ativo = ativo;
+    confirmUpdateUser(editedUser)
+    this.clearInputs()
 
-      confirmUpdateUser(arrayOfUsers[editingId])
   }
+
+  clearInputs() {
+    let inputs = document.querySelectorAll('.input');
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].value = '';
+    }
+  };
 
   render() {
 
-    const { arrayOfUsers, deleteUser, updateUser, isEditing, editingId } = this.props
+    const { arrayOfUsers, deleteUser, updateUser, isEditing, editingUser } = this.props
 
     const editingButton = (
       <button
@@ -81,69 +82,74 @@ class Table extends React.Component {
 
     return (
       <div>
-        <Link to="/management">
+        <Link to="/menu">
           Voltar
         </Link>
         <form>
-        <label>
+          <label>
             Nome:
             <input
+              className="input"
               type="text"
               name="nome"
-              value={isEditing ? arrayOfUsers[editingId].nome : ''}
-              onChange={ this.handleChange }
+              placeholder={isEditing ? editingUser[0].nome : ''}
+              onChange={this.handleChange}
             />
-        </label>
-        <br/>
-        <label>
+          </label>
+          <br />
+          <label>
             Sobrenome:
             <input
+              className="input"
               type="text"
               name="sobrenome"
-              value={isEditing ? arrayOfUsers[editingId].sobrenome : ''}
-              onChange={ this.handleChange }
+              placeholder={isEditing ? editingUser[0].sobrenome : ''}
+              onChange={this.handleChange}
             />
-        </label>
-        <br/>
-        <label>
+          </label>
+          <br />
+          <label>
             Email:
             <input
+              className="input"
               type="email"
               name="email"
-              value={isEditing ? arrayOfUsers[editingId].email : ''}
-              onChange={ this.handleChange }
+              placeholder={isEditing ? editingUser[0].email : ''}
+              onChange={this.handleChange}
             />
-        </label>
-        <br/>
-        <label>
+          </label>
+          <br />
+          <label>
             Senha:
             <input
+              className="input"
               type="password"
               name="senha"
-              value={isEditing ? arrayOfUsers[editingId].senha : ''}
-              onChange={ this.handleChange }
+              onChange={this.handleChange}
             />
-        </label>
-        <br/>
-        <label>
+          </label>
+          <br />
+          <label>
             Tipo Usuário:
             <select
+              className="input"
               name="tipoUsuario"
-              value={isEditing ? arrayOfUsers[editingId].tipoUsuario : ''}
-              onChange={ this.handleChange }
+              value={isEditing ? editingUser[0].tipoUsuario : ''}
+              onChange={this.handleChange}
             >
               <option value=""></option>
               <option value="Administrador">Administrador</option>
               <option value="Usuário padrão">Usuário padrão</option>
             </select>
           </label>
-          <br/>
+          <br />
           <label>
             Usuário Ativo:
             <select
+              className="input"
               name="ativo"
-              value={isEditing ? arrayOfUsers[editingId].ativo : ''}
-              onChange={ this.handleChange }
+              value={isEditing ? editingUser[0].ativo : ''}
+              onChange={this.handleChange}
             >
               <option value=''></option>
               <option value='Sim'>Sim</option>
@@ -151,7 +157,7 @@ class Table extends React.Component {
             </select>
           </label>
         </form>
-        { isEditing ? editingButton : addingButton}
+        {isEditing ? editingButton : addingButton}
         <h1>List Users</h1>
         <table>
           <thead>
@@ -178,18 +184,18 @@ class Table extends React.Component {
                   <td>{ativo === 'Sim' ? "Sim" : "Não"}</td>
                   <td>
                     <button
-                      data-testid="edit-btn"
                       type="button"
-                      onClick={() => updateUser(id,true)}
+                      onClick={() => updateUser(id, true)}
+                      disabled={isEditing}
                     >
                       O
                     </button>
                   </td>
                   <td>
                     <button
-                      data-testid="delete-btn"
                       type="button"
                       onClick={() => deleteUser(id)}
+                      disabled={isEditing}
                     >
                       X
                     </button>
@@ -207,14 +213,15 @@ class Table extends React.Component {
 const mapStateToProps = (state) => ({
   arrayOfUsers: state.users.allUsers,
   isEditing: state.users.isEditing,
-  editingId: state.users.editingId
+  editingId: state.users.editingId,
+  editingUser: state.users.editingUser
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addUser: (user) => dispatch(addUserAction(user)),
   deleteUser: (id) => dispatch(deleteUserAction(id)),
   updateUser: (id) => dispatch(editingUserAction(id, true)),
-  confirmUpdateUser: (user) => dispatch(editedUserAction(user,false))
+  confirmUpdateUser: (user) => dispatch(editedUserAction(user, false))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
