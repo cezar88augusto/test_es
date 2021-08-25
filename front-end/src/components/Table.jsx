@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteUserAction, addUserAction, editingUserAction, editedUserAction } from '../actions/index'
+import { deleteUserAction, addUserAction, editingUserAction, editedUserAction } from '../actions/index';
+import InputsForm from './InputsForm';
+import UserCard from './UserCard';
 
 class Table extends React.Component {
   constructor(props) {
@@ -50,7 +52,6 @@ class Table extends React.Component {
     editedUser.ativo = ativo;
     confirmUpdateUser(editedUser)
     this.clearInputs()
-
   }
 
   clearInputs() {
@@ -61,7 +62,6 @@ class Table extends React.Component {
   };
 
   render() {
-
     const { arrayOfUsers, deleteUser, updateUser, isEditing, editingUser } = this.props
 
     const editingButton = (
@@ -85,80 +85,17 @@ class Table extends React.Component {
         <Link to="/menu">
           Voltar
         </Link>
-        <form>
-          <label>
-            Nome:
-            <input
-              className="input"
-              type="text"
-              name="nome"
-              placeholder={isEditing ? editingUser[0].nome : ''}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <label>
-            Sobrenome:
-            <input
-              className="input"
-              type="text"
-              name="sobrenome"
-              placeholder={isEditing ? editingUser[0].sobrenome : ''}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <label>
-            Email:
-            <input
-              className="input"
-              type="email"
-              name="email"
-              placeholder={isEditing ? editingUser[0].email : ''}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <label>
-            Senha:
-            <input
-              className="input"
-              type="password"
-              name="senha"
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <label>
-            Tipo Usuário:
-            <select
-              className="input"
-              name="tipoUsuario"
-              value={isEditing ? editingUser[0].tipoUsuario : ''}
-              onChange={this.handleChange}
-            >
-              <option value=""></option>
-              <option value="Administrador">Administrador</option>
-              <option value="Usuário padrão">Usuário padrão</option>
-            </select>
-          </label>
-          <br />
-          <label>
-            Usuário Ativo:
-            <select
-              className="input"
-              name="ativo"
-              value={isEditing ? editingUser[0].ativo : ''}
-              onChange={this.handleChange}
-            >
-              <option value=''></option>
-              <option value='Sim'>Sim</option>
-              <option value='Não'>Não</option>
-            </select>
-          </label>
-        </form>
+
+        <InputsForm
+          isEditing={isEditing}
+          editingUser={editingUser}
+          handleChange={this.handleChange}
+        />
+
         {isEditing ? editingButton : addingButton}
+
         <h1>List Users</h1>
+
         <table>
           <thead>
             <tr>
@@ -171,36 +108,14 @@ class Table extends React.Component {
           </thead>
           {<tbody>
             {arrayOfUsers.map(
-              ({
-                id,
-                nome,
-                sobrenome,
-                tipoUsuario,
-                ativo,
-              }) => (
-                <tr key={id}>
-                  <td>{nome + " " + sobrenome}</td>
-                  <td>{tipoUsuario}</td>
-                  <td>{ativo === 'Sim' ? "Sim" : "Não"}</td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={() => updateUser(id, true)}
-                      disabled={isEditing}
-                    >
-                      O
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={() => deleteUser(id)}
-                      disabled={isEditing}
-                    >
-                      X
-                    </button>
-                  </td>
-                </tr>
+              (user) => (
+                <UserCard
+                  key={user.id}
+                  user={user}
+                  deleteUser={deleteUser}
+                  updateUser={updateUser}
+                  isEditing={isEditing}
+                />
               ),
             )}
           </tbody>}
