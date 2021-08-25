@@ -54,7 +54,6 @@ class InputsForm extends React.Component {
             <select
               className="input"
               name="tipoUsuario"
-              value={isEditing ? editingUser[0].tipoUsuario : ''}
               onChange={handleChange}
             >
               <option value=""></option>
@@ -68,7 +67,6 @@ class InputsForm extends React.Component {
             <select
               className="input"
               name="ativo"
-              value={isEditing ? editingUser[0].ativo : ''}
               onChange={handleChange}
             >
               <option value=''></option>

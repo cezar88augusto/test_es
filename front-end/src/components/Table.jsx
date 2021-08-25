@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteUserAction, addUserAction, editingUserAction, editedUserAction } from '../actions/index';
+import { deleteUserAction, addUserAction, editingUserAction, editedUserAction, cancelEditingUserAction } from '../actions/index';
 import InputsForm from './InputsForm';
 import UserCard from './UserCard';
 
@@ -21,6 +21,7 @@ class Table extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.addUserState = this.addUserState.bind(this);
     this.clearInputs = this.clearInputs.bind(this);
+    this.cancelEditUserState = this.cancelEditUserState.bind(this);
   }
 
   handleChange(event) {
@@ -41,8 +42,8 @@ class Table extends React.Component {
   }
 
   editUserState() {
-    const { editingId, arrayOfUsers, confirmUpdateUser } = this.props
-    const { nome, sobrenome, tipoUsuario, email, senha, ativo } = this.state
+    const { editingId, arrayOfUsers, confirmUpdateUser } = this.props;
+    const { nome, sobrenome, tipoUsuario, email, senha, ativo } = this.state;
     const editedUser = arrayOfUsers.filter((user) => user.id === editingId)[0];
     editedUser.nome = nome;
     editedUser.sobrenome = sobrenome;
@@ -50,8 +51,8 @@ class Table extends React.Component {
     editedUser.email = email;
     editedUser.senha = senha;
     editedUser.ativo = ativo;
-    confirmUpdateUser(editedUser)
-    this.clearInputs()
+    confirmUpdateUser(editedUser);
+    this.clearInputs();
   }
 
   clearInputs() {
@@ -61,8 +62,22 @@ class Table extends React.Component {
     }
   };
 
+  cancelEditUserState() {
+    const { cancelUpdate } = this.props;
+    this.clearInputs()
+    cancelUpdate()
+  }
+
   render() {
     const { arrayOfUsers, deleteUser, updateUser, isEditing, editingUser } = this.props
+
+    const cancelButton = (
+      <button
+        onClick={() => this.cancelEditUserState()}
+      >
+        Cancelar
+      </button>
+    )
 
     const editingButton = (
       <button
@@ -93,6 +108,7 @@ class Table extends React.Component {
         />
 
         {isEditing ? editingButton : addingButton}
+        {isEditing ? cancelButton : null}
 
         <h1>List Users</h1>
 
@@ -136,7 +152,8 @@ const mapDispatchToProps = (dispatch) => ({
   addUser: (user) => dispatch(addUserAction(user)),
   deleteUser: (id) => dispatch(deleteUserAction(id)),
   updateUser: (id) => dispatch(editingUserAction(id, true)),
-  confirmUpdateUser: (user) => dispatch(editedUserAction(user, false))
+  confirmUpdateUser: (user) => dispatch(editedUserAction(user, false)),
+  cancelUpdate: () => dispatch(cancelEditingUserAction(false))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

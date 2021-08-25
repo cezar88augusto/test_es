@@ -32,6 +32,8 @@ function usersReducer(state = INITIAL_STATE, action) {
           return elem;
         })],
       };
+    case 'CANCEL_EDITING_USER':
+      return {...state, isEditing: bool}
     default:
       return state;
   }

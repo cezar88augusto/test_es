@@ -29,3 +29,8 @@ export const editedUserAction = (user, bool) => ({
   user,
   bool,
 });
+
+export const cancelEditingUserAction = (bool) => ({
+  type: 'CANCEL_EDITING_USER',
+  bool,
+});
