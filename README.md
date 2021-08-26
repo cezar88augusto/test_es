@@ -22,8 +22,9 @@ Controle de Versão:
 # :exclamation: Pré-requisitos:
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com)
-Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
+[Git](https://git-scm.com).
+<br>
+Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/).
 
 # 🎲 Rodando o Front-End (servidor):
 ##### Clone este repositório
@@ -45,11 +46,17 @@ $ npm run start
 
 # :card_index: Dependências Instaladas e Comandos
 React:
+<br>
 $ npx create-react-app front-end
+<br>
 $ npm i react-router-dom
+<br>
 Redux:
+<br>
 npm i redux
+<br>
 npm i react-redux
+<br>
 npm i redux-thunk
 
 # :man: Autor:
