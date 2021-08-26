@@ -2,7 +2,7 @@ import React from 'react';
 
 class UserCard extends React.Component {
   render() {
-    const { user, deleteUser, updateUser, isEditing } = this.props;
+    const { user, deleteUser, updateUser, isEditing, isAdm } = this.props;
     const { id, nome, sobrenome, tipoUsuario, ativo } = user;
     return (
       <tr key={id}>
@@ -14,7 +14,7 @@ class UserCard extends React.Component {
             data-testid="edit-btn"
             type="button"
             onClick={() => updateUser(id, true)}
-            disabled={isEditing}
+            disabled={isEditing || !isAdm}
           >
             O
           </button>
@@ -24,7 +24,7 @@ class UserCard extends React.Component {
             data-testid="delete-btn"
             type="button"
             onClick={() => deleteUser(id)}
-            disabled={isEditing}
+            disabled={isEditing || !isAdm}
           >
             X
           </button>

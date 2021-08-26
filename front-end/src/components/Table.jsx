@@ -18,7 +18,7 @@ class Table extends React.Component {
       ativo: '',
       editingUser: ''
     };
-    
+
     this.handleChange = this.handleChange.bind(this);
     this.addUserState = this.addUserState.bind(this);
     this.clearInputs = this.clearInputs.bind(this);
@@ -31,7 +31,12 @@ class Table extends React.Component {
   }
 
   addUserState() {
-    const { addUser } = this.props;
+    const { addUser, isAdm } = this.props;
+
+    if (!isAdm) {
+      return window.alert('Usuário sem permissão para adicionar, editar ou excluir.')
+    }
+
     this.setState(prevState => {
       return {
         ...prevState,
@@ -43,8 +48,13 @@ class Table extends React.Component {
   }
 
   editUserState() {
-    const { editingId, arrayOfUsers, confirmUpdateUser } = this.props;
+    const { editingId, arrayOfUsers, confirmUpdateUser, isAdm } = this.props;
     const { nome, sobrenome, tipoUsuario, email, senha, ativo } = this.state;
+
+    if (!isAdm) {
+      return window.alert('Usuário sem permissão para adicionar, editar ou excluir.')
+    }
+
     const editedUser = arrayOfUsers.filter((user) => user.id === editingId)[0];
     editedUser.nome = nome;
     editedUser.sobrenome = sobrenome;
@@ -70,7 +80,7 @@ class Table extends React.Component {
   }
 
   render() {
-    const { arrayOfUsers, deleteUser, updateUser, isEditing, editingUser } = this.props
+    const { arrayOfUsers, deleteUser, updateUser, isEditing, editingUser, isAdm, email } = this.props
 
     const cancelButton = (
       <button
@@ -102,6 +112,9 @@ class Table extends React.Component {
           Voltar
         </Link>
 
+        <p>{`Usuário: ${email}`}</p>
+        <p>{`Tipo: ${isAdm ? 'Administrador' : "Comum"}`}</p>
+
         <InputsForm
           isEditing={isEditing}
           editingUser={editingUser}
@@ -132,6 +145,7 @@ class Table extends React.Component {
                   deleteUser={deleteUser}
                   updateUser={updateUser}
                   isEditing={isEditing}
+                  isAdm={isAdm}
                 />
               ),
             )}
@@ -146,7 +160,9 @@ const mapStateToProps = (state) => ({
   arrayOfUsers: state.users.allUsers,
   isEditing: state.users.isEditing,
   editingId: state.users.editingId,
-  editingUser: state.users.editingUser
+  editingUser: state.users.editingUser,
+  isAdm: state.user.isAdm,
+  email: state.user.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
