@@ -1,0 +1,74 @@
+[
+  {
+    "id": 0,
+    "nome": "Anderson",
+    "sobrenome": "Araujo Varejão",
+    "tipoUsuario": "Administrador",
+    "email": "usuario1@email.com.br",
+    "senha": "123445",
+    "ativo": "Sim"
+  },
+  {
+    "id": 1,
+    "nome": "João",
+    "sobrenome": "Pedro Silva",
+    "tipoUsuario": "Administrador",
+    "email": "usuario2@email.com.br",
+    "senha": "123445",
+    "ativo": "Sim"
+  },
+  {
+    "id": 2,
+    "nome": "Diane",
+    "sobrenome": "Pacheco",
+    "tipoUsuario": "Usuário padrão",
+    "email": "usuario3@email.com.br",
+    "senha": "123445",
+    "ativo": "Sim"
+  },
+  {
+    "id": 3,
+    "nome": "Andreia",
+    "sobrenome": "Silveira Souza",
+    "tipoUsuario": "Usuário padrão",
+    "email": "usuario4@email.com.br",
+    "senha": "123445",
+    "ativo": "Não"
+  },
+  {
+    "id": 4,
+    "nome": "Camila",
+    "sobrenome": "Lindoso Cortez",
+    "tipoUsuario": "Usuário padrão",
+    "email": "usuario5@email.com.br",
+    "senha": "123445",
+    "ativo": "Sim"
+  },
+  {
+    "id": 5,
+    "nome": "Antonio",
+    "sobrenome": "Neto da Silva Fernandes",
+    "tipoUsuario": "Administrador",
+    "email": "usuario6@email.com.br",
+    "senha": "123445",
+    "ativo": "Sim"
+  },
+  {
+    "id": 6,
+    "nome": "Cleo",
+    "sobrenome": "Prado Douglas",
+    "tipoUsuario": "Usuário padrão",
+    "email": "usuario7@email.com.br",
+    "senha": "123445",
+    "ativo": "Não"
+  },
+  {
+    "id": 7,
+    "nome": "Maria",
+    "sobrenome": "Clara Araujo Martins",
+    "tipoUsuario": "Administrador",
+    "email": "usuario8@email.com.br",
+    "senha": "123445",
+    "ativo": "Não"
+  }
+]
