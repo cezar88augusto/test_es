@@ -23,17 +23,25 @@ class Table extends React.Component {
     this.addUserState = this.addUserState.bind(this);
     this.clearInputs = this.clearInputs.bind(this);
     this.cancelEditUserState = this.cancelEditUserState.bind(this);
-  }
+  };
 
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
-  }
+  };
+
+  clearInputs() {
+    let inputs = document.querySelectorAll('.input');
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].value = '';
+    }
+  };
 
   addUserState() {
     const { addUser, isAdm } = this.props;
 
     if (!isAdm) {
+      this.clearInputs()
       return window.alert('Usuário sem permissão para adicionar, editar ou excluir.')
     }
 
@@ -45,7 +53,7 @@ class Table extends React.Component {
     })
     addUser(this.state)
     this.clearInputs()
-  }
+  };
 
   editUserState() {
     const { editingId, arrayOfUsers, confirmUpdateUser, isAdm } = this.props;
@@ -53,7 +61,7 @@ class Table extends React.Component {
 
     if (!isAdm) {
       return window.alert('Usuário sem permissão para adicionar, editar ou excluir.')
-    }
+    };
 
     const editedUser = arrayOfUsers.filter((user) => user.id === editingId)[0];
     editedUser.nome = nome;
@@ -66,18 +74,11 @@ class Table extends React.Component {
     this.clearInputs();
   }
 
-  clearInputs() {
-    let inputs = document.querySelectorAll('.input');
-    for (let i = 0; i < inputs.length; i++) {
-      inputs[i].value = '';
-    }
-  };
-
   cancelEditUserState() {
     const { cancelUpdate } = this.props;
     this.clearInputs()
     cancelUpdate()
-  }
+  };
 
   render() {
     const { arrayOfUsers, deleteUser, updateUser, isEditing, editingUser, isAdm, email } = this.props
@@ -113,7 +114,7 @@ class Table extends React.Component {
         </Link>
 
         <p>{`Usuário: ${email}`}</p>
-        <p>{`Tipo: ${isAdm ? 'Administrador' : "Comum"}`}</p>
+        <p>{`Tipo: ${isAdm ? 'Administrador' : "Usuário Padrão"}`}</p>
 
         <InputsForm
           isEditing={isEditing}

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../actions/index';
 import { isValidEmail, isValidPassword } from '../functions';
-import LoginForm from '../components/LoginForm'
+import LoginForm from '../components/LoginForm';
+import data from '../../src/data/db.json'
 
 class Login extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class Login extends React.Component {
       password: '',
       validateEmail: false,
     };
+    this.thereIsUserInData = this.thereIsUserInData.bind(this);
   }
 
   handleChange(event) {
@@ -26,17 +28,27 @@ class Login extends React.Component {
     }
   }
 
+  thereIsUserInData() {
+    const { email, password } = this.state;
+    const { loggin } = this.props;
+    const isUser = data.some((user) => user.email === email && user.senha === password)
+    if (!isUser) {
+      return window.alert('Usuário não cadastrado ou senha incorreta.')
+    }
+    loggin(email)
+  }
+
   render() {
-    const { validateEmail, email } = this.state;
-    const { loggin, logged } = this.props;
+    const { validateEmail } = this.state;
+    const { logged } = this.props;
     if (logged) return (<Redirect to="/menu" />);
     return (
       <div>
-        <LoginForm handleChange={this.handleChange}/>
+        <LoginForm handleChange={this.handleChange} />
         <button
           type="button"
           disabled={!validateEmail}
-          onClick={() => loggin(email)}
+          onClick={() => this.thereIsUserInData()}
         >
           Entrar
         </button>
