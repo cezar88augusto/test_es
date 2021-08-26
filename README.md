@@ -1,4 +1,4 @@
-# Aplicação CRUD de Usuário utilizando Redux
+# Aplicação CRUD de Usuário utilizando React e Redux
 
 # 🎯 Objetivo: 
 Criar uma aplicação do tipo CRUD (Create, Read, Update e Delete), cujo intuito é o gerenciamento de usuários em um arquivo do tipo JSON.
